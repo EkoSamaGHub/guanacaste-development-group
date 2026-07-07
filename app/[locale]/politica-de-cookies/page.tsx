@@ -46,7 +46,7 @@ export default async function CookiePolicyPage({
       locale={locale}
       eyebrow="Legal"
       title={es ? "Política de cookies" : "Cookie policy"}
-      updated={es ? "por confirmar" : "to be confirmed"}
+      updated={es ? "7 de julio de 2026" : "July 7, 2026"}
       breadcrumb={{
         name: es ? "Política de cookies" : "Cookie policy",
         path: "/politica-de-cookies/",

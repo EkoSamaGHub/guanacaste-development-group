@@ -4,7 +4,7 @@ import { listings, formatPrice } from "@/lib/listings";
 import { Icon } from "@/lib/icon";
 import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
-import { PhotoPending } from "@/components/PhotoPending";
+import { SiteImage } from "@/components/SiteImage";
 import { PageHero, Section, Eyebrow, PrimaryCta, InvestBand } from "@/components/ui";
 
 export async function generateMetadata({
@@ -94,8 +94,8 @@ export default async function ProjectsPage({
         eyebrow={t.eyebrow}
         title={t.title}
         lede={t.lede}
-        photoLabel={t.photoLabel}
-        photoIcon="Buildings"
+        image="/site/commercial-2.jpg"
+        imageAlt={t.photoLabel}
         breadcrumb={[{ name: t.breadcrumb, path: "/projects/" }]}
       />
 
@@ -110,10 +110,9 @@ export default async function ProjectsPage({
           {projectTypes.map((p, i) => (
             <Reveal key={p.title.en} delay={(i % 2) * 90}>
               <article className="group overflow-hidden rounded-sm border border-line bg-surface">
-                <PhotoPending
-                  label={p.title[locale]}
-                  icon={p.icon}
-                  caption={t.projectCaption}
+                <SiteImage
+                  src={p.image}
+                  alt={p.title[locale]}
                   className="h-64"
                 />
                 <div className="p-8">

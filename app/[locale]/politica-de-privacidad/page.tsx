@@ -30,7 +30,7 @@ export default async function PrivacyPolicyPage({
       locale={locale}
       eyebrow="Legal"
       title={es ? "Política de privacidad" : "Privacy policy"}
-      updated={es ? "por confirmar" : "to be confirmed"}
+      updated={es ? "7 de julio de 2026" : "July 7, 2026"}
       breadcrumb={{
         name: es ? "Política de privacidad" : "Privacy policy",
         path: "/politica-de-privacidad/",

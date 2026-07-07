@@ -209,6 +209,7 @@ export type ProjectType = {
   title: Localized;
   scope: Localized;
   icon: string;
+  image: string;
 };
 
 export const projectTypes: ProjectType[] = [
@@ -223,6 +224,7 @@ export const projectTypes: ProjectType[] = [
       en: "Gated communities, condominiums and luxury residences conceived for lifestyle and investment.",
     },
     icon: "HouseLine",
+    image: "/site/residential.jpg",
   },
   {
     kind: { es: "Hospitalidad", en: "Hospitality" },
@@ -235,6 +237,7 @@ export const projectTypes: ProjectType[] = [
       en: "Projects that integrate hospitality, retail and residential uses within a single master plan.",
     },
     icon: "Buildings",
+    image: "/site/hotel.jpg",
   },
   {
     kind: { es: "Comercial", en: "Commercial" },
@@ -247,6 +250,7 @@ export const projectTypes: ProjectType[] = [
       en: "Commercial and office spaces designed to serve businesses and communities alike.",
     },
     icon: "Storefront",
+    image: "/site/commercial.jpg",
   },
   {
     kind: { es: "Terreno", en: "Land" },
@@ -259,6 +263,7 @@ export const projectTypes: ProjectType[] = [
       en: "Strategic land acquisition, zoning, infrastructure and master-planned community design.",
     },
     icon: "MapTrifold",
+    image: "/site/volcano.jpg",
   },
 ];
 

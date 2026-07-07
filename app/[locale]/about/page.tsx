@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { pageAlternates, type Locale } from "@/lib/site";
 import { Icon } from "@/lib/icon";
 import { Reveal } from "@/components/Reveal";
-import { PhotoPending } from "@/components/PhotoPending";
+import { SiteImage } from "@/components/SiteImage";
 import { PageHero, Section, Eyebrow, InvestBand } from "@/components/ui";
 
 export async function generateMetadata({
@@ -104,8 +104,8 @@ export default async function AboutPage({
         eyebrow={t.eyebrow}
         title={t.title}
         lede={t.lede}
-        photoLabel={t.photoLabel}
-        photoIcon="Users"
+        image="/site/coast.jpg"
+        imageAlt={t.photoLabel}
         breadcrumb={[{ name: t.breadcrumb, path: "/about/" }]}
       />
 
@@ -120,9 +120,9 @@ export default async function AboutPage({
             <p className="mt-4 leading-relaxed text-ink-muted max-w-xl">{t.storyP2}</p>
           </Reveal>
           <Reveal delay={100}>
-            <PhotoPending
-              label={t.storyPhoto}
-              icon="MapPin"
+            <SiteImage
+              src="/site/development.jpg"
+              alt={t.storyPhoto}
               className="aspect-[4/5] rounded-sm"
             />
           </Reveal>
@@ -158,9 +158,9 @@ export default async function AboutPage({
       <Section>
         <div className="grid gap-14 lg:grid-cols-[1fr_1.1fr] lg:items-center">
           <Reveal>
-            <PhotoPending
-              label={t.whyPhoto}
-              icon="Waves"
+            <SiteImage
+              src="/site/beach-2.jpg"
+              alt={t.whyPhoto}
               className="aspect-[5/4] rounded-sm"
             />
           </Reveal>

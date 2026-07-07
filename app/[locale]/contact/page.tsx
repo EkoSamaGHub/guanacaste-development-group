@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { site, waHref, pageAlternates, type Locale } from "@/lib/site";
 import { Icon } from "@/lib/icon";
 import { Reveal } from "@/components/Reveal";
-import { PhotoPending } from "@/components/PhotoPending";
+import { SiteImage } from "@/components/SiteImage";
 import { Section, Eyebrow } from "@/components/ui";
 import { InquiryForm } from "@/components/InquiryForm";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
@@ -38,8 +38,8 @@ const copy = {
     routeTitle: "Atendemos a cada perfil de forma dedicada",
     channels: [
       { icon: "WhatsappLogo", label: "WhatsApp", value: site.phoneDisplay, note: "La vía más directa para coordinar una consulta.", href: waHref("es"), external: true },
-      { icon: "MapPin", label: "Ubicación", value: "Guanacaste, Costa Rica", note: "Dirección exacta de oficina por confirmar." },
-      { icon: "Clock", label: "Horario", value: "Horario de atención por confirmar", note: "Escríbanos por WhatsApp y le confirmamos disponibilidad." },
+      { icon: "MapPin", label: "Ubicación", value: "Guanacaste, Costa Rica", note: "Operamos en Guanacaste y en todo Costa Rica." },
+      { icon: "Clock", label: "Horario", value: "Respuesta rápida por WhatsApp", note: "Escríbanos por WhatsApp y le confirmamos disponibilidad." },
     ],
     routes: [
       { icon: "HouseLine", title: "Compradores", body: "Propiedades residenciales, frente al mar y de estilo de vida en Costa Rica." },
@@ -61,8 +61,8 @@ const copy = {
     routeTitle: "We serve each profile with dedicated attention",
     channels: [
       { icon: "WhatsappLogo", label: "WhatsApp", value: site.phoneDisplay, note: "The most direct way to arrange a consultation.", href: waHref("en"), external: true },
-      { icon: "MapPin", label: "Location", value: "Guanacaste, Costa Rica", note: "Exact office address to be confirmed." },
-      { icon: "Clock", label: "Hours", value: "Business hours to be confirmed", note: "Message us on WhatsApp and we'll confirm availability." },
+      { icon: "MapPin", label: "Location", value: "Guanacaste, Costa Rica", note: "We operate across Guanacaste and all of Costa Rica." },
+      { icon: "Clock", label: "Hours", value: "Fast response on WhatsApp", note: "Message us on WhatsApp and we'll confirm availability." },
     ],
     routes: [
       { icon: "HouseLine", title: "Buyers", body: "Residential, beachfront and lifestyle properties across Costa Rica." },
@@ -138,10 +138,9 @@ export default async function ContactPage({
             </ul>
 
             <div className="mt-8">
-              <PhotoPending
-                label={t.mapLabel}
-                caption={t.mapCaption}
-                icon="MapPin"
+              <SiteImage
+                src="/site/coast.jpg"
+                alt={t.mapLabel}
                 className="h-48 rounded-sm"
               />
             </div>

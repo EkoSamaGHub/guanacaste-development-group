@@ -124,8 +124,8 @@ export default async function InvestPage({
         eyebrow={t.eyebrow}
         title={t.title}
         lede={t.lede}
-        photoLabel={t.photoLabel}
-        photoIcon="ChartLineUp"
+        image="/site/coast-2.jpg"
+        imageAlt={t.photoLabel}
         breadcrumb={[{ name: t.breadcrumb, path: "/invest/" }]}
       />
 

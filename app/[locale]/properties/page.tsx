@@ -72,8 +72,8 @@ export default async function PropertiesPage({
         eyebrow={t.eyebrow}
         title={t.title}
         lede={t.lede}
-        photoLabel={t.photoLabel}
-        photoIcon="Waves"
+        image="/site/beach-2.jpg"
+        imageAlt={t.photoLabel}
         breadcrumb={[{ name: t.breadcrumb, path: "/properties/" }]}
       />
 

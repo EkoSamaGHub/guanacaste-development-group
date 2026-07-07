@@ -1,7 +1,7 @@
 import { services, projectTypes, waHref, localeHref, type Locale } from "@/lib/site";
 import { Icon } from "@/lib/icon";
 import { Reveal } from "@/components/Reveal";
-import { PhotoPending } from "@/components/PhotoPending";
+import { SiteImage } from "@/components/SiteImage";
 import {
   PrimaryCta,
   GhostCta,
@@ -100,9 +100,17 @@ export default async function Home({
 
       {/* ── Cinematic hero ─────────────────────────────────────────── */}
       <section className="relative min-h-[92vh] flex items-end overflow-hidden">
-        <div className="photo-pending absolute inset-0" aria-hidden="true" />
+        {/* Real Guanacaste hero — the page LCP: eager + high priority. */}
+        <img
+          src="/site/hero.jpg"
+          alt=""
+          aria-hidden="true"
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
         <div
-          className="absolute inset-0 bg-gradient-to-t from-accent-2/90 via-accent-2/45 to-accent-2/25"
+          className="absolute inset-0 bg-gradient-to-t from-accent-2/95 via-accent-2/55 to-accent-2/35"
           aria-hidden="true"
         />
         <div className="relative mx-auto w-full max-w-7xl px-5 sm:px-8 pb-20 sm:pb-28 pt-40">
@@ -132,9 +140,6 @@ export default async function Home({
             </Reveal>
           </div>
         </div>
-        <p className="absolute bottom-5 right-5 text-[0.62rem] uppercase tracking-[0.2em] text-surface/40">
-          {t.heroPhoto}
-        </p>
       </section>
 
       <CredibilityStrip locale={locale} />
@@ -143,10 +148,9 @@ export default async function Home({
       <Section>
         <div className="grid gap-14 lg:grid-cols-[1fr_1.15fr] lg:items-center">
           <Reveal>
-            <PhotoPending
-              label={t.firmPhoto}
-              icon="MapPin"
-              caption={t.heroPhoto}
+            <SiteImage
+              src="/site/development.jpg"
+              alt={t.firmPhoto}
               className="aspect-[4/5] rounded-sm"
             />
           </Reveal>
@@ -182,10 +186,9 @@ export default async function Home({
           {projectTypes.map((p, i) => (
             <Reveal key={p.title.en} delay={i * 80}>
               <article className="group h-full overflow-hidden rounded-sm border border-line bg-surface">
-                <PhotoPending
-                  label={p.title[locale]}
-                  icon={p.icon}
-                  caption={t.projectCaption}
+                <SiteImage
+                  src={p.image}
+                  alt={p.title[locale]}
                   className="h-52"
                 />
                 <div className="p-7">

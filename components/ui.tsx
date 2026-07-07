@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { site, waHref, localeHref, type Locale } from "@/lib/site";
 import { Icon } from "@/lib/icon";
 import { Reveal } from "@/components/Reveal";
-import { PhotoPending } from "@/components/PhotoPending";
+import { SiteImage } from "@/components/SiteImage";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
 
 export function PrimaryCta({
@@ -74,18 +74,16 @@ export function PageHero({
   eyebrow,
   title,
   lede,
-  photoLabel,
-  photoCaption,
-  photoIcon = "MapTrifold",
+  image,
+  imageAlt,
   breadcrumb,
 }: {
   locale: Locale;
   eyebrow: string;
   title: ReactNode;
   lede: string;
-  photoLabel: string;
-  photoCaption?: string;
-  photoIcon?: string;
+  image: string;
+  imageAlt: string;
   breadcrumb: { name: string; path: string }[];
 }) {
   const home = locale === "es" ? "Inicio" : "Home";
@@ -109,10 +107,10 @@ export function PageHero({
             </Reveal>
           </div>
           <Reveal delay={120}>
-            <PhotoPending
-              label={photoLabel}
-              caption={photoCaption}
-              icon={photoIcon}
+            <SiteImage
+              src={image}
+              alt={imageAlt}
+              priority
               className="h-56 sm:h-72 rounded-sm"
             />
           </Reveal>
@@ -237,4 +235,4 @@ export function CredibilityStrip({ locale }: { locale: Locale }) {
   );
 }
 
-export { site, waHref, Icon, Reveal, PhotoPending };
+export { site, waHref, Icon, Reveal, SiteImage };

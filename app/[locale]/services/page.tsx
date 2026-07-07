@@ -63,8 +63,8 @@ export default async function ServicesPage({
         eyebrow={t.eyebrow}
         title={t.title}
         lede={t.lede}
-        photoLabel={t.photoLabel}
-        photoIcon="Blueprint"
+        image="/site/development-2.jpg"
+        imageAlt={t.photoLabel}
         breadcrumb={[{ name: t.breadcrumb, path: "/services/" }]}
       />
 
