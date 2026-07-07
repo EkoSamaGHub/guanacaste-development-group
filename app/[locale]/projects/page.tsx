@@ -151,7 +151,7 @@ export default async function ProjectsPage({
           {devSites.map((l, i) => (
             <Reveal key={l.slug} delay={(i % 3) * 70}>
               <Link
-                href={localeHref(locale, "/properties/")}
+                href={localeHref(locale, `/properties/${l.slug}/`)}
                 className="group flex h-full flex-col overflow-hidden rounded-sm border border-line bg-surface"
               >
                 <div className="aspect-[16/10] overflow-hidden bg-line/40">

@@ -129,6 +129,10 @@ export const listings: Listing[] = [
       "/properties/development-opportunity-next-to-mcdonalds/4.png",
       "/properties/development-opportunity-next-to-mcdonalds/5.png",
       "/properties/development-opportunity-next-to-mcdonalds/6.png",
+      "/properties/development-opportunity-next-to-mcdonalds/7.png",
+      "/properties/development-opportunity-next-to-mcdonalds/8.png",
+      "/properties/development-opportunity-next-to-mcdonalds/9.png",
+      "/properties/development-opportunity-next-to-mcdonalds/10.png",
     ],
     coverWidth: 1600,
     coverHeight: 1067,
@@ -164,6 +168,7 @@ export const listings: Listing[] = [
       "/properties/7-7-hectares-development-mix-usage/4.jpg",
       "/properties/7-7-hectares-development-mix-usage/5.jpg",
       "/properties/7-7-hectares-development-mix-usage/6.jpg",
+      "/properties/7-7-hectares-development-mix-usage/7.jpg",
     ],
     coverWidth: 1540,
     coverHeight: 772,
@@ -235,6 +240,10 @@ export const listings: Listing[] = [
       "/properties/shovel-ready-property-in-uvita-costa-rica-130-hectares-for-d/4.jpg",
       "/properties/shovel-ready-property-in-uvita-costa-rica-130-hectares-for-d/5.jpg",
       "/properties/shovel-ready-property-in-uvita-costa-rica-130-hectares-for-d/6.jpg",
+      "/properties/shovel-ready-property-in-uvita-costa-rica-130-hectares-for-d/7.jpg",
+      "/properties/shovel-ready-property-in-uvita-costa-rica-130-hectares-for-d/8.jpg",
+      "/properties/shovel-ready-property-in-uvita-costa-rica-130-hectares-for-d/9.jpg",
+      "/properties/shovel-ready-property-in-uvita-costa-rica-130-hectares-for-d/10.jpg",
     ],
     coverWidth: 980,
     coverHeight: 551,
@@ -274,6 +283,9 @@ export const listings: Listing[] = [
     coverHeight: 707,
   },
 ];
+
+export const listingBySlug = (slug: string): Listing | undefined =>
+  listings.find((l) => l.slug === slug);
 
 // ── Formatting helpers (deterministic — no ICU dependency, no hydration risk) ──
 

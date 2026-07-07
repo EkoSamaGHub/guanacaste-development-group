@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { propertyCategories, waHref, type Locale } from "@/lib/site";
+import Link from "next/link";
+import { propertyCategories, localeHref, type Locale } from "@/lib/site";
 import {
   listings,
   formatPrice,
@@ -19,8 +20,8 @@ export function PropertyExplorer({ locale }: { locale: Locale }) {
 
   const t =
     locale === "es"
-      ? { all: "Todas", filter: "Filtrar propiedades", inquire: "Consultar", none: "No hay propiedades en esta categoría por el momento." }
-      : { all: "All", filter: "Filter properties", inquire: "Inquire", none: "No properties in this category right now." };
+      ? { all: "Todas", filter: "Filtrar propiedades", detail: "Ver detalle", none: "No hay propiedades en esta categoría por el momento." }
+      : { all: "All", filter: "Filter properties", detail: "View details", none: "No properties in this category right now." };
 
   const filters = [{ key: "all", label: t.all, icon: "Compass" }, ...propertyCategories.map((c) => ({ key: c.key, label: c.label[locale], icon: c.icon }))];
   const shown: Listing[] =
@@ -28,11 +29,6 @@ export function PropertyExplorer({ locale }: { locale: Locale }) {
 
   const categoryLabel = (key: string) =>
     propertyCategories.find((c) => c.key === key)?.label[locale] ?? key;
-
-  const waMessage = (l: Listing) =>
-    locale === "es"
-      ? `Buenos días, me interesa la propiedad "${l.title.es}" (${l.location.es}). ¿Podrían darme más información?`
-      : `Good morning, I'm interested in the property "${l.title.en}" (${l.location.en}). Could you share more information?`;
 
   return (
     <div>
@@ -65,7 +61,11 @@ export function PropertyExplorer({ locale }: { locale: Locale }) {
           const specs = listingSpecs(l, locale);
           return (
             <Reveal key={l.slug} delay={(i % 3) * 70}>
-              <article className="group flex h-full flex-col overflow-hidden rounded-sm border border-line bg-surface">
+              <Link
+                href={localeHref(locale, `/properties/${l.slug}/`)}
+                aria-label={l.title[locale]}
+                className="group flex h-full flex-col overflow-hidden rounded-sm border border-line bg-surface transition-colors hover:border-accent/60"
+              >
                 <div className="relative aspect-[16/10] overflow-hidden bg-line/40">
                   <img
                     src={l.photos[0]}
@@ -79,6 +79,11 @@ export function PropertyExplorer({ locale }: { locale: Locale }) {
                   <span className="absolute left-3 top-3 rounded-full bg-accent-2/90 px-3 py-1 text-[0.66rem] font-semibold uppercase tracking-[0.14em] text-surface backdrop-blur-sm">
                     {categoryLabel(l.category)}
                   </span>
+                  {l.photos.length > 1 && (
+                    <span className="absolute bottom-3 right-3 rounded-full bg-accent-2/80 px-2.5 py-1 text-[0.66rem] font-medium text-surface backdrop-blur-sm">
+                      {l.photos.length} {locale === "es" ? "fotos" : "photos"}
+                    </span>
+                  )}
                 </div>
                 <div className="flex flex-1 flex-col p-7">
                   <div className="flex items-center gap-2 text-gold-ink">
@@ -87,7 +92,7 @@ export function PropertyExplorer({ locale }: { locale: Locale }) {
                       {l.status[locale]}
                     </span>
                   </div>
-                  <h3 className="mt-3 font-[family-name:var(--font-display)] text-xl leading-snug text-ink">
+                  <h3 className="mt-3 font-[family-name:var(--font-display)] text-xl leading-snug text-ink transition-colors group-hover:text-gold-ink">
                     {l.title[locale]}
                   </h3>
                   <p className="mt-2 flex items-center gap-1.5 text-sm text-ink-muted">
@@ -106,27 +111,21 @@ export function PropertyExplorer({ locale }: { locale: Locale }) {
                       ))}
                     </ul>
                   )}
-                  <p className="mt-4 flex-1 text-sm leading-relaxed text-ink-muted line-clamp-4">
+                  <p className="mt-4 flex-1 text-sm leading-relaxed text-ink-muted line-clamp-3">
                     {l.description[locale]}
                   </p>
-                  {/* price + inquire on a thin gold hairline */}
+                  {/* price + view-details on a thin gold hairline */}
                   <div className="mt-6 flex items-center justify-between border-t border-accent/40 pt-4">
                     <span className="font-[family-name:var(--font-display)] text-lg text-ink">
                       {formatPrice(l, locale)}
                     </span>
-                    <a
-                      href={waHref(locale, waMessage(l))}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${t.inquire} — ${l.title[locale]}`}
-                      className="inline-flex items-center gap-1.5 text-sm font-medium text-gold-ink transition-colors hover:text-ink"
-                    >
-                      {t.inquire}
-                      <Icon name="ArrowUpRight" size={15} />
-                    </a>
+                    <span className="inline-flex items-center gap-1.5 text-sm font-medium text-gold-ink transition-colors group-hover:text-ink">
+                      {t.detail}
+                      <Icon name="ArrowUpRight" size={15} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </span>
                   </div>
                 </div>
-              </article>
+              </Link>
             </Reveal>
           );
         })}
