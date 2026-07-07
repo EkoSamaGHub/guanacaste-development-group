@@ -9,9 +9,9 @@ import {
   X,
   CaretRight,
 } from "@phosphor-icons/react/dist/ssr";
-import { nav, site, waHref } from "@/lib/site";
+import { nav, site, waHref, localeHref, type Locale } from "@/lib/site";
 
-export function Nav() {
+export function Nav({ locale }: { locale: Locale }) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -27,8 +27,39 @@ export function Nav() {
     setOpen(false);
   }, [pathname]);
 
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+  const home = `/${locale}`;
+  // Active when the current path matches the locale-prefixed href.
+  const isActive = (href: string) => {
+    const full = localeHref(locale, href);
+    return href === "/" ? pathname === home || pathname === `${home}/` : pathname.startsWith(full);
+  };
+
+  const t = locale === "es"
+    ? { menu: "Menú", open: "Abrir menú", close: "Cerrar menú", main: "Principal", mobile: "Móvil", talk: "Hablemos", waMobile: "Escríbanos por WhatsApp", homeAria: "inicio" }
+    : { menu: "Menu", open: "Open menu", close: "Close menu", main: "Main", mobile: "Mobile", talk: "Let's talk", waMobile: "Message us on WhatsApp", homeAria: "home" };
+
+  // Language switcher: swap the leading /es|/en segment of the current path.
+  const other: Locale = locale === "es" ? "en" : "es";
+  const switchHref = (() => {
+    const rest = pathname.replace(/^\/(es|en)(?=\/|$)/, "");
+    return `/${other}${rest || "/"}`;
+  })();
+
+  const LangSwitch = ({ className = "" }: { className?: string }) => (
+    <div className={`inline-flex items-center rounded-full border border-line text-[0.72rem] font-semibold uppercase tracking-[0.12em] ${className}`}>
+      <span className="px-2.5 py-1 text-ink" aria-current="true">
+        {locale}
+      </span>
+      <Link
+        href={switchHref}
+        hrefLang={other}
+        className="px-2.5 py-1 text-ink-muted transition-colors hover:text-accent border-l border-line"
+        aria-label={other === "en" ? "Switch to English" : "Cambiar a español"}
+      >
+        {other}
+      </Link>
+    </div>
+  );
 
   return (
     <header
@@ -44,7 +75,7 @@ export function Nav() {
             scrolled ? "h-16" : "h-20"
           }`}
         >
-          <Link href="/" className="group flex items-baseline gap-2.5" aria-label={`${site.name} — inicio`}>
+          <Link href={home} className="group flex items-baseline gap-2.5" aria-label={`${site.name} — ${t.homeAria}`}>
             <span className="font-[family-name:var(--font-display)] text-xl tracking-tight text-ink">
               Guanacaste
             </span>
@@ -53,11 +84,11 @@ export function Nav() {
             </span>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-8" aria-label="Principal">
+          <nav className="hidden lg:flex items-center gap-8" aria-label={t.main}>
             {nav.map((item) => (
               <Link
                 key={item.href}
-                href={item.href}
+                href={localeHref(locale, item.href)}
                 aria-current={isActive(item.href) ? "page" : undefined}
                 className={`relative text-[0.82rem] tracking-wide transition-colors ${
                   isActive(item.href)
@@ -65,7 +96,7 @@ export function Nav() {
                     : "text-ink-muted hover:text-ink"
                 }`}
               >
-                {item.label}
+                {item.label[locale]}
                 <span
                   className={`absolute -bottom-2 left-0 h-[1.5px] bg-accent transition-all duration-300 ${
                     isActive(item.href) ? "w-full" : "w-0"
@@ -76,20 +107,21 @@ export function Nav() {
           </nav>
 
           <div className="flex items-center gap-3">
+            <LangSwitch className="hidden sm:inline-flex" />
             <a
-              href={waHref()}
+              href={waHref(locale)}
               target="_blank"
               rel="noopener noreferrer"
               className="hidden md:inline-flex items-center gap-2 rounded-full bg-accent-2 px-5 py-2.5 text-[0.78rem] font-medium tracking-wide text-surface transition-colors hover:bg-ink"
             >
               <WhatsappLogo size={16} aria-hidden="true" />
-              Hablemos
+              {t.talk}
             </a>
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
               className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-full text-ink hover:bg-line/50"
-              aria-label={open ? "Cerrar menú" : "Abrir menú"}
+              aria-label={open ? t.close : t.open}
               aria-expanded={open}
             >
               {open ? (
@@ -105,23 +137,23 @@ export function Nav() {
       {/* Mobile drawer */}
       <div
         className={`lg:hidden overflow-hidden transition-[max-height] duration-500 ease-out ${
-          open ? "max-h-[32rem]" : "max-h-0"
+          open ? "max-h-[36rem]" : "max-h-0"
         }`}
       >
         <nav
           className="mx-auto max-w-7xl px-5 pb-8 pt-2 flex flex-col gap-1"
-          aria-label="Móvil"
+          aria-label={t.mobile}
         >
           {nav.map((item) => (
             <Link
               key={item.href}
-              href={item.href}
+              href={localeHref(locale, item.href)}
               aria-current={isActive(item.href) ? "page" : undefined}
               className={`flex items-center justify-between border-b border-line py-3.5 text-base ${
                 isActive(item.href) ? "text-accent" : "text-ink"
               }`}
             >
-              {item.label}
+              {item.label[locale]}
               <CaretRight
                 size={16}
                 aria-hidden="true"
@@ -129,15 +161,18 @@ export function Nav() {
               />
             </Link>
           ))}
-          <a
-            href={waHref()}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-accent-2 px-5 py-3.5 text-sm font-medium text-surface"
-          >
-            <WhatsappLogo size={18} aria-hidden="true" />
-            Escríbanos por WhatsApp
-          </a>
+          <div className="mt-5 flex items-center justify-between">
+            <LangSwitch />
+            <a
+              href={waHref(locale)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-accent-2 px-5 py-3 text-sm font-medium text-surface"
+            >
+              <WhatsappLogo size={18} aria-hidden="true" />
+              {t.waMobile}
+            </a>
+          </div>
         </nav>
       </div>
     </header>

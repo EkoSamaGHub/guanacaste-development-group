@@ -2,25 +2,31 @@ import type { ReactNode } from "react";
 import { Reveal } from "@/components/Reveal";
 import { Eyebrow } from "@/components/ui";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
+import type { Locale } from "@/lib/site";
 
 // Shared chrome for the CR-legal pages (privacy, cookies). One <h1> per page.
 export function LegalPage({
+  locale,
   eyebrow,
   title,
   updated,
   breadcrumb,
   children,
 }: {
+  locale: Locale;
   eyebrow: string;
   title: string;
   updated: string;
   breadcrumb: { name: string; path: string };
   children: ReactNode;
 }) {
+  const home = locale === "es" ? "Inicio" : "Home";
+  const updatedLabel = locale === "es" ? "Última actualización" : "Last updated";
   return (
     <>
       <BreadcrumbJsonLd
-        items={[{ name: "Inicio", path: "/" }, breadcrumb]}
+        locale={locale}
+        items={[{ name: home, path: "/" }, breadcrumb]}
       />
       <section className="pt-32 pb-8 sm:pt-40">
         <div className="mx-auto max-w-3xl px-5 sm:px-8">
@@ -30,7 +36,7 @@ export function LegalPage({
               {title}
             </h1>
             <p className="mt-6 text-sm text-ink-muted">
-              Última actualización: {updated}
+              {updatedLabel}: {updated}
             </p>
           </Reveal>
         </div>

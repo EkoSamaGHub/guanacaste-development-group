@@ -40,6 +40,8 @@ import {
   PaperPlaneTilt,
   Globe,
   ChatCircleText,
+  Bed,
+  Bathtub,
 } from "@phosphor-icons/react/dist/ssr";
 
 const icons: Record<string, ComponentType<IconProps>> = {
@@ -79,6 +81,8 @@ const icons: Record<string, ComponentType<IconProps>> = {
   PaperPlaneTilt,
   Globe,
   ChatCircleText,
+  Bed,
+  Bathtub,
 };
 
 export function Icon({
